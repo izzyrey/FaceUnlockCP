@@ -10,7 +10,8 @@
 
 ---
 Для установки нужен Visual Studio, а так же, все что отмечено галочками на скриншоте
-<img width="1445" height="368" alt="image" src="https://github.com/user-attachments/assets/77415e55-4840-4c54-9f99-8155716e54ab" />
+<img width="1010" height="768" alt="image" src="https://github.com/user-attachments/assets/b13eb290-e291-4c8e-9636-150c2af4b61b" />
+
 
 
 
