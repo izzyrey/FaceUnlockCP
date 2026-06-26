@@ -77,30 +77,6 @@ FaceUnlock.Setup.exe   [C# .NET 8, WPF, трей, в сессии пользов
 
 ---
 
-## Установка
-
-```powershell
-# От имени администратора:
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\Install.ps1
-```
-
-Скрипт автоматически:
-1. Удаляет следы старой установки (если есть): tray-автозагрузку, старую службу
-2. Скачивает Haar-каскад OpenCV
-3. Собирает C++ DLL через CMake + MSVC
-4. Собирает три C#-проекта (`Service`, `RecognizeHelper`, `Setup`) через `dotnet publish`
-5. Копирует всё в `%ProgramFiles%\FaceUnlock`
-6. Регистрирует DLL как COM-сервер и Credential Provider
-7. Прописывает политику `AllowUnverifiedCredentialProviders` в реестр
-8. Создаёт `%ProgramData%\FaceUnlock\{Data,Logs}` и настраивает права (ACL)
-9. **Регистрирует `FaceUnlockService` как настоящую Windows-службу**
-   (`LocalSystem`, автозапуск, автоперезапуск при сбое) и запускает её
-10. Прописывает автозапуск `FaceUnlock.Setup.exe` в трее (для любого
-    вошедшего пользователя) и запускает его сразу для первичной настройки
-
----
-
 ## Первичная настройка (после установки)
 
 1. В трее появится иконка FaceUnlock (от `FaceUnlock.Setup.exe`)
@@ -131,48 +107,6 @@ Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 > существует, поэтому службе некуда запускать `RecognizeHelper` — в этом
 > случае войдите обычным паролем один раз, дальше `Win+L` будет работать
 > по лицу как обычно. Это ограничение самой концепции инструмента, а не баг.
-
----
-
-## Структура проекта
-
-```
-FaceUnlockCP/
-├── Install.ps1                  — сборка + установка (от администратора)
-├── Uninstall.ps1                — полное удаление
-│
-├── Provider/                    — C++ Credential Provider DLL
-│   ├── CMakeLists.txt
-│   ├── FaceUnlock.CredentialProvider.def
-│   └── src/
-│       ├── FaceUnlockProvider.h / .cpp    — ICredentialProvider
-│       ├── FaceUnlockCredential.h / .cpp  — ICredentialProviderCredential2
-│       └── dllmain.cpp                    — DllMain, COM factory, regsvr32
-│
-├── Shared/                      — общая C#-библиотека (.NET 8)
-│   ├── Paths.cs                 — пути в %ProgramData%\FaceUnlock
-│   ├── PipeProtocol.cs          — протоколы DLL↔Service и Service↔Helper
-│   ├── Logger.cs                — общий лог
-│   ├── CredentialStore.cs       — DPAPI-хранилище (LocalMachine scope)
-│   └── FaceRecognizer.cs        — OpenCV LBPH
-│
-├── Service/                     — настоящая Windows-служба (SYSTEM)
-│   ├── FaceUnlock.Service.csproj
-│   ├── Program.cs                       — Generic Host + AddWindowsService()
-│   ├── Worker.cs                        — pipe-сервер, оркестрация
-│   └── SessionProcessLauncher.cs        — запуск Helper в сессии пользователя
-│
-├── RecognizeHelper/              — консольный помощник (сессия пользователя)
-│   ├── FaceUnlock.RecognizeHelper.csproj
-│   └── Program.cs                — открывает камеру, печатает MATCH/NOMATCH
-│
-└── Setup/                        — трей-приложение настройки (сессия пользователя)
-    ├── FaceUnlock.Setup.csproj
-    ├── App.xaml / App.xaml.cs            — трей, статус службы
-    └── SetupWindow.xaml / .cs            — обучение модели + ввод пароля
-```
-
----
 
 ## Хранение данных
 
