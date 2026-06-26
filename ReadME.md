@@ -34,7 +34,7 @@
 | Visual Studio | VS 2022 с компонентом **Desktop development with C++** |
 | .NET SDK | .NET 8 SDK |
 | Камера | Любая UVC |
-| Аккаунт Windows | Локальный с **текстовым паролем** (PIN и Microsoft-аккаунт не поддерживаются) |
+| Аккаунт Windows | Локальный с **текстовым паролем** или **Microsoft-аккаунт - при настройке учетных данных УКАЗЫВАТЬ ПАРОЛЬ от аккаунта Microsoft** (PIN Windows Hello - не поддерживается) |
 
 ---
 
