@@ -9,10 +9,10 @@
 > «Известные ограничения» про безопасность хранения пароля).
 
 ---
-Для установки нужен Visual Studio Community 2026, а так же, все что отмечено галочками на скриншоте
-<img width="831" height="113" alt="image" src="https://github.com/user-attachments/assets/33aee908-2f09-4572-917a-b0d5e25a164f" />
-<img width="322" height="458" alt="image" src="https://github.com/user-attachments/assets/d2c3c318-f037-44b1-9840-8569ec7ddf1a" />
-<img width="320" height="602" alt="image" src="https://github.com/user-attachments/assets/c2576c8f-161a-4f2e-8f13-997b8d74aaf6" />
+Для установки:
+1) Скачайте FaceUnlock v2.0 (Для установки v1.0 понадобится Visual Studio)
+2) Распакуйте архив
+3) Запустите FaceUnlock.Installer.exe от имени Администратора
 
 
 
